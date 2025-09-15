@@ -1,14 +1,37 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+const { BrowserRouter, Routes, Route, Link, useParams } = ReactRouterDOM;
 
-// Initialize React root
-const root = createRoot(document.getElementById("root"));
+function Home() {
+  return (
+    <div>
+      <h1>🏞️ Welcome to Park Restaurant Voting</h1>
+      <ul>
+        <li><Link to="/vote/pizza">Pizza Place</Link></li>
+        <li><Link to="/vote/sushi">Sushi Spot</Link></li>
+        <li><Link to="/vote/burger">Burger Barn</Link></li>
+      </ul>
+    </div>
+  );
+}
 
-// Render App within BrowserRouter for routing
-root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
+function Vote() {
+  const { name } = useParams();
+  return (
+    <div>
+      <h2>You voted for: {name}! 🍴</h2>
+      <Link to="/">Go Home</Link>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/vote/:name" element={<Vote />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
